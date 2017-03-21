@@ -101,7 +101,7 @@ class Particle3D(object):
     def force(self,particle2,f):
         """
         :param particle2: the second particle included in the system
-        :return: Returns the vector force of the two systems
+        :return: Returns the vector force from particle2 acting on self
 	"""
 	f = -6.67408*10**(-20)*self.mass*particle2.mass*Particle3D.vecsep(self,particle2)/(vctr.SqMag(Particle3D.vecsep(self,particle2))**(3.0/2.0))
 	return f
@@ -110,7 +110,7 @@ class Particle3D(object):
     def poten(self,particle2,u):
         """
         :param particle2: the second particle included in the system
-        :return: Returns the potential energy between of the two particles
+        :return: Returns the potential energy between the two particles
 	"""
 	u = -6.67408*10**(-20)*self.mass*particle2.mass/Particle3D.mag_sep(self,particle2)
 	return u
@@ -119,7 +119,7 @@ class Particle3D(object):
     def ang_vel(self,particle2,w):
         """
         :param particle2: the second particle included in the system
-        :return: returns the angular velocity respect to the sun or moon
+        :return: returns the angular velocity with respect to particle2 as the central particle
 	"""
         w = vctr.Mag(vctr.cross(Particle3D.vecsep(particle2,self),(self.velocity-particle2.velocity))/(vctr.SqMag(Particle3D.vecsep(self,particle2))) )
         return w
