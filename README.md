@@ -4,6 +4,6 @@ Rhiannon Cajipe-Stansfield - s1308303, </br>
 Andrew Mobberley - s1427210 </br>
 
 # Instructions
-Ensure entire archive is extracted to one directory with the subfolder PlanetsUniq present. </br>
+Ensure entire archive is extracted to one directory which contains the folder PlanetsUniq within it. </br>
 To alter the simulation parameters open the file "SimulationParameters.csv" and each value corresponds to the title above. The minimum required number of steps is 100. </br>
 Run SolarSystem.py
