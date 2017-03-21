@@ -36,6 +36,7 @@ class Particle3D(object):
 #        """
 #        return "label = " + str(self.label) + ", r = " + str(self.position)
 
+#how str is defined is changed so that it is a position in a VMD file
     def __str__(self):
         self.positionvmd = str(self.position[0]) +" " +str(self.position[1]) +" " +str(self.position[2])
         return "{} {} \n".format(self.label,self.positionvmd)
