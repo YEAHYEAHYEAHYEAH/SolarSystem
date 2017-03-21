@@ -1,55 +1,55 @@
 EARTH 
-The Apoapse of this body is 152060452.446km
-The Periapse of this body is 147116830.619km
-The Orbital Period of this body is 365.25 days (or 1.0 years)
+The Apoapse of this body is 148431269.891km
+The Periapse of this body is 147280494.178km
+The Orbital Period of this body is 356.434138509 days 
 
 HALLEYS_COMET 
-The Apoapse of this body is 5183430258.56km
+The Apoapse of this body is 5154302731.33km
 The Periapse of this body is 5150759256.09km
-The Orbital Period of this body is 406249.06624 days (or 1112.24932578 years)
+The Orbital Period of this body is 405339.549213 days (or 1109.75920387 years)
 
 JUPITER 
 The Apoapse of this body is 816285686.423km
-The Periapse of this body is 810782243.021km
-The Orbital Period of this body is 4756.01921268 days (or 13.0212709451 years)
+The Periapse of this body is 816263977.508km
+The Orbital Period of this body is 4771.49441478 days (or 13.0636397393 years)
 
 MARS 
-The Apoapse of this body is 249180324.925km
+The Apoapse of this body is 221600419.604km
 The Periapse of this body is 214223614.829km
-The Orbital Period of this body is 751.442010586 days (or 2.05733610017 years)
+The Orbital Period of this body is 629.780615393 days (or 1.72424535357 years)
 
 MERCURY 
-The Apoapse of this body is 69755131.9022km
-The Periapse of this body is 46025365.1809km
-The Orbital Period of this body is 87.9375 days (or 0.240759753593 years)
+The Apoapse of this body is 69754639.2494km
+The Periapse of this body is 55099387.672km
+The Orbital Period of this body is 114.718340106 days 
 
 MOON 
-The Apoapse of this body is 408322.056598km
-The Periapse of this body is 355364.969168km
-The Orbital Period of this body is 1.42107508532 days 
+The Apoapse of this body is 405583.537753km
+The Periapse of this body is 367572.110761km
+The Orbital Period of this body is 27.4166666667 days 
 
 NEPTUNE 
 The Apoapse of this body is 4480630737.94km
-The Periapse of this body is 4479499265.77km
-The Orbital Period of this body is 59699.098211 days (or 163.447223028 years)
+The Periapse of this body is 4480509024.16km
+The Orbital Period of this body is 59816.4485232 days (or 163.768510673 years)
 
 PLUTO 
-The Apoapse of this body is 5014940508.63km
+The Apoapse of this body is 4979257524.23km
 The Periapse of this body is 4975340043.3km
-The Orbital Period of this body is 66575.3011051 days (or 182.273240534 years)
+The Orbital Period of this body is 66085.2010299 days (or 180.931419658 years)
 
 SATURN 
-The Apoapse of this body is 1505769010.17km
+The Apoapse of this body is 1503840683.46km
 The Periapse of this body is 1503423832.59km
-The Orbital Period of this body is 11972.0719385 days (or 32.7777465803 years)
+The Orbital Period of this body is 11942.5112904 days (or 32.6968139368 years)
 
 URANUS 
 The Apoapse of this body is 2982687759.6km
-The Periapse of this body is 2976179584.84km
-The Orbital Period of this body is 33102.8366217 days (or 90.630627301 years)
+The Periapse of this body is 2982063453.23km
+The Orbital Period of this body is 33232.0535002 days (or 90.9844038336 years)
 
 VENUS 
-The Apoapse of this body is 108983851.478km
-The Periapse of this body is 107428621.77km
-The Orbital Period of this body is 224.708333333 days (or 0.615217887292 years)
+The Apoapse of this body is 107675157.482km
+The Periapse of this body is 107433060.393km
+The Orbital Period of this body is 221.752886412 days 
 

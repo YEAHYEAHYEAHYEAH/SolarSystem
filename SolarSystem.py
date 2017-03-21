@@ -61,7 +61,8 @@ for x3 in xrange(Num_Bodies):
     particle0 = Planet_list[x3]
     if particle0.label == "SUN":
         sunnumber = x3
-        pSun = Planet_list[x3] 
+        pSun = particle0
+        pSun_vel = pSun.velocity
 
 for x4 in xrange(Num_Bodies):
     particle0 = Planet_list[x4]
@@ -81,7 +82,7 @@ PeriapseMoon = [p3D.mag_sep(pMoon,pEarth)]
 
 Apoapsis = np.zeros((int(Num_Bodies),1))
 ApoapseMoon = [0.0]
-ThetaMoon = [0.0]
+ThetaMoon = 0.0
 PeriodMoon = []
 Energy_list = []
 time_list = []
@@ -117,12 +118,11 @@ for i in range(1,numstep):
                 PeriapseMoon[0] = MoonSep
             if ApoapseMoon[0] < MoonSep:
                 ApoapseMoon[0] = MoonSep
-
-        if x1 == moonnumber and x1 != earthnumber:
-            ThetaMoon[0] = pMoon.ang_vel(pMoon,pEarth,w)*dt+ThetaMoon[0]
-            if ThetaMoon[0] > 2*m.pi:
+            moon_ang_vel = pMoon.ang_vel(pMoon,pEarth,w)
+            ThetaMoon = moon_ang_vel*dt+ThetaMoon
+            if ThetaMoon > 2*m.pi:
                 PeriodMoon.append(i*dt/(60.0*60.0*24.0) - sum(PeriodMoon) )
-                ThetaMoon[0] = ThetaMoon[0]-2*m.pi
+                ThetaMoon = ThetaMoon-2*m.pi
 
         #loop to find other planet periapse and apoapse + period
         if x1 != moonnumber and x1 != sunnumber:
@@ -141,6 +141,8 @@ for i in range(1,numstep):
 
         ###End of Periapse and Apoapse Bollocks###
 
+        kinetic_energy = (1.0/2.0)*particle0.mass*(vctr.SqMag(particle0.velocity))
+        total_kinetic = total_kinetic+kinetic_energy
 
         ###loop to calculate all forces acting on main planet [x1] from secondary planets [x2]###
         for x2 in xrange(Num_Bodies):
@@ -162,8 +164,7 @@ for i in range(1,numstep):
                 new_force_array[x1] = new_force_array[x1]+interaction_force
                 new_force_array[x2] = new_force_array[x2]-interaction_force
         ###Done calculating total force from all secondary planets on main planet###
-        kinetic_energy = (1.0/2.0)*particle0.mass*(vctr.SqMag(particle0.velocity))
-        total_kinetic = total_kinetic+kinetic_energy
+
         particle0.newvel(dt,0.5*(force_array[x1]+new_force_array[x1]))        #calculates the new velocity, using verlet method, of main planet
         force_array[x1] = new_force_array[x1]
         particle0.newnewpos(dt,force_array[x1])
@@ -193,7 +194,9 @@ for x1 in xrange(Num_Bodies):
         Orbit_info.write('The Apoapse of this body is {}km\n'.format(float(Apoapsis[x1])))
         Orbit_info.write('The Periapse of this body is {}km\n'.format(float(Periapse[x1])))
         Orbit_info.write('The Orbital Period of this body is {} days '.format( float(sum(Period[x1])) / float(len(Period[x1])) ) )
-        Orbit_info.write('(or {} years)\n\n'.format( float(sum(Period[x1])) / (365.25*float(len(Period[x1]))) ) )
+        if float(sum(Period[x1])) / float(len(Period[x1])) > 365.25:
+            Orbit_info.write('(or {} years)'.format( float(sum(Period[x1])) / (365.25*float(len(Period[x1]))) ) )
+        Orbit_info.write('\n\n')
 
 
 plt.plot(time_list,Energy_list)

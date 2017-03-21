@@ -112,8 +112,6 @@ class Particle3D(object):
         :return: Returns the potential energy between of the two particles
 	"""
 	u = -6.67408*10**(-20)*self.mass*particle2.mass/Particle3D.mag_sep(self,particle2)
-
-#	u = -6.67408*10**(-20)*self.mass*particle2.mass/( vctr.SqMag(Particle3D.vecsep(self,particle2))**(1.0/2.0) )
 	return u
 
     @staticmethod
@@ -122,6 +120,6 @@ class Particle3D(object):
         :param particle2: the second particle included in the system
         :return: returns the angular velocity respect to the sun or moon
 	"""
-        w = vctr.Mag(vctr.cross(Particle3D.vecsep(self,particle2),self.velocity)/(vctr.SqMag(Particle3D.vecsep(self,particle2))) )
+        w = vctr.Mag(vctr.cross(Particle3D.vecsep(particle2,self),(self.velocity-particle2.velocity))/(vctr.SqMag(Particle3D.vecsep(self,particle2))) )
         return w
 
