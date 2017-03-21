@@ -30,13 +30,7 @@ class Particle3D(object):
         self.position = np.array([x_pos,y_pos,z_pos])
         self.velocity = np.array([x_vel,y_vel,z_vel])
 
-#    def __str__(self):
-#        """
-#        :return: Returns the particle number and a position vector, useful for printing
-#        """
-#        return "label = " + str(self.label) + ", r = " + str(self.position)
-
-    #how str is defined is changed so that it is a position in a VMD file
+    #how str is defined is changed so that it is a readable point for VMD
     def __str__(self):
         self.positionvmd = str(self.position[0]) +" " +str(self.position[1]) +" " +str(self.position[2])
         return "{} {} \n".format(self.label,self.positionvmd)
