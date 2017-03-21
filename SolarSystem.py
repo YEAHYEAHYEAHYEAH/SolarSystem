@@ -59,28 +59,29 @@ Planet_list = []
 for x1 in xrange(Num_Bodies):
     particle0 = p3D.from_file(bodies[x1].tolist())
     Planet_list.append(particle0)
-
+#identify the Sun in the planet list, and marking its index
 for x3 in xrange(Num_Bodies):
     particle0 = Planet_list[x3]
     if particle0.label == "SUN":
         sunnumber = x3
         pSun = particle0
         pSun_vel = pSun.velocity
-
+#calculate the seperation of a body and the Sun, ensuring that it doesn't also include the Sun
 for x4 in xrange(Num_Bodies):
     particle0 = Planet_list[x4]
     Period.append([])
     if x4 != sunnumber:
         Periapse[x4] = p3D.mag_sep(particle0,pSun)
-    #moon
+    #identifies the moon as that is a special case, and marking its index
     if particle0.label == "MOON":
         moonnumber = x4
         pMoon = Planet_list[x4]
+    #identifies the Earth and marks its index, to be used to calculate the periapse of the moon
     if particle0.label == "EARTH":
         earthnumber = x4
         pEarth = Planet_list[x4]
 
-
+#calculate the periapsis of the moon
 PeriapseMoon = [p3D.mag_sep(pMoon,pEarth)]
 
 Apoapsis = np.zeros((int(Num_Bodies),1))
@@ -96,7 +97,7 @@ time_list = []
 
 
 ###Running through simulation for the number of steps and timestep size defined in simulation parameters###
-
+#writes the necessary data to the VMD file
 for i in range(1,numstep):
     if i%vmdstep ==0:
         VMDFILE.write('{}\n'.format(Num_Bodies))
@@ -104,7 +105,7 @@ for i in range(1,numstep):
         for x1 in range(Num_Bodies):
             particle0 = Planet_list[x1]
             VMDFILE.write('{}'.format(particle0))
-
+    #prints the status of the program, as a check to make sure it is actually running
     if i%(numstep/10) ==0:
         print "As of " +str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")) +" --> The program is " +str(i*100/numstep) +"% completed."
 
@@ -112,9 +113,11 @@ for i in range(1,numstep):
         #Initialising a "main" planet
         particle0 = Planet_list[x1]
     
-        ###Periapse and Apoapse Bollocks### 
+        ###Periapse and Apoapse Calculations### 
 
-        #loop to find moon periapse and apoapse + period
+        #loop to find other planet periapse and apoapse + period. The period is found by using angular velocity to find the angle
++       #swept out in a timestep and summing it over the total run time. The orbital period will then be the time taken to orbit
++       #2pi radians
         if x1 == earthnumber:
             MoonSep = p3D.mag_sep(pMoon,pEarth)
             if PeriapseMoon[0] > MoonSep:
@@ -135,16 +138,19 @@ for i in range(1,numstep):
                 Theta[x1] = Theta[x1]-2*m.pi
             if i == numstep-1 and Period[x1]==[]:
                 Period[x1].append(i*dt*2*m.pi/(Theta[x1]*60.0*60.0*24.0))
-
+            #the apoapse is found by calculating the seperation between the body and the Sun and adding it to a list.
++           #If the seperation is greater than the previous value calculated, then that value replaces the previous one. Thus, the
++           #value at the end of the runtime should be the greatest seperation of the Sun and the body.
++           #the periapse is calculated similarly, except replacing the previous value only when the calculated value is less than it.
             SunSep = p3D.mag_sep(particle0,pSun)
             if Periapse[x1] > SunSep:
                 Periapse[x1] = SunSep
             if Apoapsis[x1] < SunSep:
                 Apoapsis[x1] = SunSep
 
-        ###End of Periapse and Apoapse Bollocks###
+        ###End of Periapse and Apoapse Calculations###
 
-        kinetic_energy = (1.0/2.0)*particle0.mass*(vctr.SqMag(particle0.velocity))
+        kinetic_energy = (1.0/2.0)*particle0.mass*(vctr.SqMag(particle0.velocity))     #calculates the kinetic energy and sums it
         total_kinetic = total_kinetic+kinetic_energy
 
         ###loop to calculate all forces acting on main planet [x1] from secondary planets [x2]###
@@ -155,7 +161,7 @@ for i in range(1,numstep):
                 
                 #Calculating force from between secondary planet to main planet
                 interaction_force = particle0.force(particle0,particle1,f)
-                
+                #calculating potential energy between secondary planet and main planet
                 potential_energy = particle0.poten(particle0,particle1,u)
 #                if particle1.label == "SUN":
 #                    print particle0.label
@@ -170,21 +176,23 @@ for i in range(1,numstep):
 
         particle0.new_vel(dt,0.5*(force_array[x1]+new_force_array[x1]))        #calculates the new velocity, using verlet method, of main planet
         force_array[x1] = new_force_array[x1]
-        particle0.ordertwo_pos(dt,force_array[x1])
+        particle0.ordertwo_pos(dt,force_array[x1])                             #calculates the new position, using verlet method
         
         del Planet_list[x1]
         Planet_list.insert(x1,particle0)
         new_force_array[x1] = [0,0,0]                                         #set to 0 because at each new timestep entire forces need to be recalculated
 
-    total_energy = total_kinetic+total_potential
-    Energy_list.append(total_energy)
+    total_energy = total_kinetic+total_potential                              #calculates total energy from kinetic and potential energy
+    Energy_list.append(total_energy)                                          #appends total energy at each time to a list
     time_list.append((i*dt)/(60.0*60.0*24.0*365.25))
-    kinetic_energy = 0.0
+    kinetic_energy = 0.0                                                      #sets initial conditions for the energies
     total_kinetic = 0.0
     total_potential =0.0
     total_energy = 0.0
     time = time + dt
 
+#write to a document the orbital information (apoapsis, periapsis and orbital period) of each body
+#Moon is the special case
 for x1 in xrange(Num_Bodies):
     particle0 = Planet_list[x1]
     if particle0.label == "MOON":
@@ -201,6 +209,7 @@ for x1 in xrange(Num_Bodies):
             Orbit_info.write('(or {} years)'.format( float(sum(Period[x1])) / (365.25*float(len(Period[x1]))) ) )
         Orbit_info.write('\n\n')
 
+#plot a graph of total energy in MJ vs time in years
 plt.plot(time_list,Energy_list)
 plt.title('The Total Energy of the Particle as a Function of Time')
 plt.xlabel('Time (Years)')
@@ -210,6 +219,7 @@ fig = plt.gcf()
 fig.set_size_inches(14, 6)
 plt.savefig('Total Energy Fluctuations.png', dpi=300)
 
+#close the VMD file and orbital information file being written to
 VMDFILE.close()
 Orbit_info.close()
 
