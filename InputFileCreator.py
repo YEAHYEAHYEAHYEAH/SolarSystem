@@ -4,15 +4,17 @@ import glob
 import re
 import os
 
-listofposlist =[]
+listofpos_list =[]
 cwd = os.getcwd()
-labellist = []
+label_list = []
 
+#takes data from files in a directory
 for file in glob.glob(str(cwd)+'/PlanetsUniq/*.txt'):
     linepos = 0
     with open(file, 'r') as file2:
         filedata = file2.read()
 
+    #finds the mass data in the file
     mass = filedata.find('kg')
     massend = filedata[mass:].find('$')
     mass1 = float(filedata[mass:massend+mass].translate(None, 'kg )~=-+'))
@@ -31,20 +33,23 @@ for file in glob.glob(str(cwd)+'/PlanetsUniq/*.txt'):
 
     mass2 = mass1*10.0**float(massorder)
     
-    pos = filedata.find('$$SOE')
-    pos = filedata[pos+6: pos + filedata[pos+6:].find('\n')]
-    poslist = pos.split(',')
-    del poslist[0], poslist[0],poslist[-1],poslist[-1],poslist[-1]
+    #finds the position data in the file
+    position = filedata.find('$$SOE')
+    position = filedata[position+6: position + filedata[position+6:].find('\n')]
+    pos_list = position.split(',')
+    del pos_list[0], pos_list[0],pos_list[-1],pos_list[-1],pos_list[-1]
 
-    poslist.insert(0, mass2)
-    listofposlist.append(poslist)
-    name = str(file)
-    name = name[name.find("PlanetsUniq/")+12:name.find(".txt")]
-    labellist.append(name)
+    #adds the found data to lists
+    pos_list.insert(0, mass2)
+    listofpos_list.append(pos_list)
+    #finds the name of the body and adds it to a list
+    body_name = str(file)
+    body_name = body_name[body_name.find("PlanetsUniq/")+12:body_name.find(".txt")]
+    label_list.append(body_name)
 
-
-bodies = np.array(listofposlist)
-labels = np.array(labellist)
+#puts the data from the files into arrays
+bodies = np.array(listofpos_list)
+labels = np.array(label_list)
 bodiesuncorrected = np.insert(bodies, 1,labels,axis=1)
 
 #### CENTER OF MASS CORRECTIONS ####
