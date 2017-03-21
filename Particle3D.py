@@ -36,7 +36,7 @@ class Particle3D(object):
 #        """
 #        return "label = " + str(self.label) + ", r = " + str(self.position)
 
-#how str is defined is changed so that it is a position in a VMD file
+    #how str is defined is changed so that it is a position in a VMD file
     def __str__(self):
         self.positionvmd = str(self.position[0]) +" " +str(self.position[1]) +" " +str(self.position[2])
         return "{} {} \n".format(self.label,self.positionvmd)
@@ -47,7 +47,7 @@ class Particle3D(object):
         """
         return (1.0/2.0) * self.mass * vctr.SqMag(self.velocity)
 
-    def newvel(self,dt,f):
+    def new_vel(self,dt,f):
         """
         :param dt: the time step
         :param f: the force acting on the particle
@@ -55,14 +55,14 @@ class Particle3D(object):
         """
         self.velocity = self.velocity + dt*f/self.mass
        
-    def newpos(self,dt):
+    def orderone_pos(self,dt):
         """
         :param dt: the time step
         :return: Returns the new position using the Euler method
         """
         self.position = self.position + dt*self.velocity
 
-    def newnewpos(self,dt,f):
+    def ordertwo_pos(self,dt,f):
         """
         :param dt: the time step
         :param f: the force acting on the particle
@@ -80,7 +80,7 @@ class Particle3D(object):
         return Particle3D(float(tokens[0]), str(tokens[1]), float(tokens[2]), float(tokens[3]), float(tokens[4]), float(tokens[5]), float(tokens[6]), float(tokens[7]))
 
     @staticmethod
-    def vecsep(self,particle2):
+    def vec_sep(self,particle2):
         """
         :param particle2: the second particle included in the system
         :return: Returns the vector seperation of the two particles
