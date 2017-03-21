@@ -1,4 +1,4 @@
-# Importing neccesary modules
+### Importing neccesary modules ###
 import math as m
 import numpy as np
 import Vector as vctr
@@ -9,10 +9,13 @@ import datetime
 import csv
 import matplotlib.pyplot as plt
 
-###Creating variables, arrays and files to write###
 
-#getting all bodies used in simulation from input file creator
-bodies = I.bodiesfinal
+### Creating variables, arrays and files to write ###
+
+#Getting all bodies used in simulation from input file creator
+bodies = I.bodies_final
+
+#Opening files
 VMDFILE = open('VMDtrajectory.xyz', 'w')
 Orbit_info = open('Orbital Information.txt', 'w')
 
@@ -198,12 +201,14 @@ for x1 in xrange(Num_Bodies):
             Orbit_info.write('(or {} years)'.format( float(sum(Period[x1])) / (365.25*float(len(Period[x1]))) ) )
         Orbit_info.write('\n\n')
 
-
 plt.plot(time_list,Energy_list)
 plt.title('The Total Energy of the Particle as a Function of Time')
 plt.xlabel('Time (Years)')
 plt.ylabel('Energy (Mega Joules)')
-plt.show()
+
+fig = plt.gcf()
+fig.set_size_inches(14, 6)
+plt.savefig('Total Energy Fluctuations.png', dpi=300)
 
 VMDFILE.close()
 Orbit_info.close()
