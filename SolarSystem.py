@@ -168,9 +168,9 @@ for i in range(1,numstep):
                 new_force_array[x2] = new_force_array[x2]-interaction_force
         ###Done calculating total force from all secondary planets on main planet###
 
-        particle0.newvel(dt,0.5*(force_array[x1]+new_force_array[x1]))        #calculates the new velocity, using verlet method, of main planet
+        particle0.new_vel(dt,0.5*(force_array[x1]+new_force_array[x1]))        #calculates the new velocity, using verlet method, of main planet
         force_array[x1] = new_force_array[x1]
-        particle0.newnewpos(dt,force_array[x1])
+        particle0.ordertwo_pos(dt,force_array[x1])
         
         del Planet_list[x1]
         Planet_list.insert(x1,particle0)
