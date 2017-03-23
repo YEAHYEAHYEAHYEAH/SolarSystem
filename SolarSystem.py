@@ -101,11 +101,11 @@ time_list = []
 #writes the necessary data to the VMD file
 for i in range(1,numstep):
     if i%vmdstep ==0:      #so to only write to VMD_file once every "vmdstep" numsteps (eg once every 10th time loop)
-        VMD_file.write('{}\n'.format(Num_Bodies))
-        VMD_file.write('Point = {}\n'.format(i/vmdstep))
+        VMD_file.write('{}\n'.format(Num_Bodies))         #prints the number of bodies to simulate on top line
+        VMD_file.write('Point = {}\n'.format(i/vmdstep))  #prints the time in the vmd file, saving file space by not doing every timestep
         for x1 in range(Num_Bodies):
             particle0 = Planet_list[x1]
-            VMD_file.write('{}'.format(particle0))
+            VMD_file.write('{}'.format(particle0))        #prints the body and position in correct vmd format
     #prints the status of the program, to let you know how much longer you have to wait
     if i%(numstep/10) ==0:
         print "As of " +str(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")) +" --> The program is " +str(i*100/numstep) +"% completed."
@@ -148,6 +148,9 @@ for i in range(1,numstep):
             if ThetaMoon > 2*m.pi:
                 PeriodMoon.append(i*dt/(60.0*60.0*24.0) - sum(PeriodMoon) )
                 ThetaMoon = ThetaMoon-2*m.pi
+            if i == numstep-1 and PeriodMoon==[]:
+                PeriodMoon.append(i*dt*2*m.pi/(ThetaMoon*60.0*60.0*24.0))
+
                 
         ### End of Periapse and Apoapse Calculations ###
 
