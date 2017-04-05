@@ -97,7 +97,7 @@ class Particle3D(object):
         :param particle2: the second particle included in the system
         :return: Returns the vector force from particle2 acting on self
 	"""
-	f = -6.67408*10**(-20)*self.mass*particle2.mass*Particle3D.vecsep(self,particle2)/(vctr.SqMag(Particle3D.vecsep(self,particle2))**(3.0/2.0))
+	f = -6.67408*10**(-20)*self.mass*particle2.mass*Particle3D.vec_sep(self,particle2)/(vctr.SqMag(Particle3D.vec_sep(self,particle2))**(3.0/2.0))
 	return f
 
     @staticmethod
@@ -115,6 +115,6 @@ class Particle3D(object):
         :param particle2: the second particle included in the system
         :return: returns the angular velocity with respect to particle2 as the central particle
 	"""
-        w = vctr.Mag(vctr.cross(Particle3D.vecsep(particle2,self),(self.velocity-particle2.velocity))/(vctr.SqMag(Particle3D.vecsep(self,particle2))) )
+        w = vctr.Mag(vctr.cross(Particle3D.vec_sep(particle2,self),(self.velocity-particle2.velocity))/(vctr.SqMag(Particle3D.vec_sep(self,particle2))) )
         return w
 
