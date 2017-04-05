@@ -78,4 +78,4 @@ for j in range(Num_Bodies):                                  #loop to correct ea
     v_cor[j] = np.subtract(vj,v_CoM)                         #corrects each body's velocity by subtracting CoM velocity
 
 bodiesuncorrecteddel = np.delete(bodiesuncorrected, [5,6,7], axis=1)  #deletes old body velocity coordinates
-bodiesfinal = np.concatenate((bodiesuncorrecteddel,v_cor), axis=1)    #inserts the correcred velocities where the old velocities were
+bodies_final = np.concatenate((bodiesuncorrecteddel,v_cor), axis=1)    #inserts the correcred velocities where the old velocities were
