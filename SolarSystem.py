@@ -126,9 +126,9 @@ for i in range(1,numstep):
                 Period[x1].append(i*dt*2*m.pi/(Theta[x1]*60.0*60.0*24.0))  #append the scaled up time relative to how much orbit there has been
                 
             #the apoapse is found by calculating the seperation between the body and the Sun and setting the body's apoapse array element to this.
-+           #If the seperation is greater than the previous value calculated, then that value replaces the previous one. Thus, the
-+           #value at the end of the runtime should be the greatest seperation of the Sun and the body.
-+           #The periapse is calculated similarly, except replacing the previous value only when the calculated value is less than it.
+            #If the seperation is greater than the previous value calculated, then that value replaces the previous one. Thus, the
+            #value at the end of the runtime should be the greatest seperation of the Sun and the body.
+            #The periapse is calculated similarly, except replacing the previous value only when the calculated value is less than it.
             SunSep = p3D.mag_sep(particle0,pSun)
             if Periapse[x1] > SunSep:
                 Periapse[x1] = SunSep
